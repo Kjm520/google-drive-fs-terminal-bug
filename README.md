@@ -1,6 +1,6 @@
 # Google Drive for desktop (Windows): console window that cannot be closed
 
-Evidence for a long-standing defect in Google Drive for desktop on Windows. `GoogleDriveFS.exe` allocates a console window on every child-process start. When the window is visible and the user closes it, the child exits, the parent restarts it with a new window, and after seven restarts Drive stops running until the next sign-in.
+Evidence for a long-standing (at least since 2023) defect in Google Drive for desktop on Windows. `GoogleDriveFS.exe` allocates a console window on every child-process start. When the window is visible and the user closes it, the child exits, the parent restarts it with a new window, and after seven restarts Drive stops running until the next sign-in.
 
 **Read the report:** [REPORT-google-drive-console-window.md](REPORT-google-drive-console-window.md)
 
