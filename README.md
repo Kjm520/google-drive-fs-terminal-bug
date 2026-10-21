@@ -15,9 +15,10 @@ Evidence for a long-standing defect in Google Drive for desktop on Windows. `Goo
 | `existing-reports.md` | Links to earlier public reports of the same symptom in the Google Drive Help Community |
 | `googledrivefsexescreenshot20260616blurred.png` | The window on version 126.0.5.0, two weeks after a clean reinstall |
 | `console-window-after-parent-restart-2026-10-15.png` | The window after a parent-initiated restart during the controlled reproduction |
+| `live-capture-2026-10-21.md` | Live inspection of a window that appeared on its own: the child allocates the console itself, and a click in the window freezes DriveFS logging |
 
 The raw DriveFS log files that back the report are not published here because they contain account and machine identifiers. They have been provided to Google directly.
 
 ## Status
 
-Reported through Drive's in-app feedback 25 times between July and October 2026 with diagnostic logs attached, and three times by other users in the Google Drive Help Community (threads 417837966, 434801725, 445097711). No fix as of 2026-10-15 on version 132.0.0.0.
+Reported through Drive's in-app feedback 26 times between July and October 2026 with diagnostic logs attached, and three times by other users in the Google Drive Help Community (threads 417837966, 434801725, 445097711). No fix as of 2026-10-21 on version 132.0.0.0. On that date the window appeared on its own after a scheduled restart and was captured live (see `live-capture-2026-10-21.md`); closing it afterwards ran the seven-restart loop and left Drive stopped.

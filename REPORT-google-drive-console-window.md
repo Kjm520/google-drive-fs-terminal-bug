@@ -4,7 +4,7 @@
 **Versions observed:** 126.0.5.0 (screenshot, 2026-06-16), 128.0.0.0, 129.0.1.0, 130.0.2.0, 131.0.2.0, 132.0.0.0 (current). The behaviour is identical across all six; it has been present for years on this machine.
 **OS:** Windows 11 Pro 10.0.26300, x64, 24 logical processors, 32 GB RAM
 **Account type:** Workspace account, mirror mode, mounted as G:
-**Previous reports:** 25 in-app feedback reports delivered through Drive's own "Send feedback" dialog between 2026-07-21 and 2026-10-08, on versions 128 through 132, every one with diagnostic logs attached (see section 6). No response to any of them.
+**Previous reports:** 26 in-app feedback reports delivered through Drive's own "Send feedback" dialog between 2026-07-21 and 2026-10-21, on versions 128 through 132, every one with diagnostic logs attached (see section 6). No response to any of them.
 
 ## Summary
 
@@ -14,7 +14,7 @@ Every DriveFS child process allocates a console on startup. The DriveFS log reco
 instrumentation.cc:376:GetStderrFileDescriptor Allocating console to enable stderr.
 ```
 
-This line appears in 147 of 147 child-process logs retained on this machine (2026-07-21 to 2026-10-15). When that console window is visible, the user sees a black window titled `C:\Program Files\Google\Drive File Stream\<version>\GoogleDriveFS.exe` that fills with log output. Closing it sends the console close event to the child, which exits with `0xC000013A` (STATUS_CONTROL_C_EXIT). The parent process treats that as a crash and starts a new child, which opens a new console window. After 7 restarts the parent stops restarting, and Drive is down until the next sign-in.
+This line appears in 155 of 155 child-process logs retained on this machine (2026-07-21 to 2026-10-21). When that console window is visible, the user sees a black window titled `C:\Program Files\Google\Drive File Stream\<version>\GoogleDriveFS.exe` that fills with log output. Closing it sends the console close event to the child, which exits with `0xC000013A` (STATUS_CONTROL_C_EXIT). The parent process treats that as a crash and starts a new child, which opens a new console window. After 7 restarts the parent stops restarting, and Drive is down until the next sign-in.
 
 So the user-visible defect is a window that "cannot be closed", and the consequence of trying is that Drive dies.
 
@@ -35,16 +35,16 @@ Seven children exited with `0xC000013A` within 6 seconds, one per window closed.
 
 ### 2. Frequency
 
-From the 147 retained child logs (`child-process-timeline.csv`):
+From the 155 retained child logs (`child-process-timeline.csv`):
 
 | Measure | Count |
 |---|---|
-| Child starts that allocated a console | 147 of 147 |
-| Children that ended under 5 s after start (window closed) | 66 |
-| Bursts of 5 or more such closes within a minute | 11 (one every 1 to 2 weeks) |
-| Self-requested restarts (`RequestSafeRestart`, exit `0x11`) | 39 |
+| Child starts that allocated a console | 155 of 155 |
+| Children that ended under 5 s after start (window closed) | 71 |
+| Bursts of 5 or more such closes within a minute | 12 (one every 1 to 2 weeks) |
+| Self-requested restarts (`RequestSafeRestart`, exit `0x11`) | 40 |
 
-Burst dates (local): 07-21, 07-27, 07-29, 08-10, 08-11, 08-14, 09-03, 09-10, 09-21, 10-04, 10-13.
+Burst dates (local): 07-21, 07-27, 07-29, 08-10, 08-11, 08-14, 09-03, 09-10, 09-21, 10-04, 10-13, 10-21.
 
 The 39 self-requested restarts matter because each one also spawns a fresh child, and therefore a fresh console. The restart reason logged is:
 
@@ -119,9 +119,18 @@ DriveFS logs each feedback submission (`feedback_dialog.cc OnQuery submit_feedba
 | 2026-09-24 14:44 | 131.0.2.0 | 1 | 1 | 0 | "GoogleDriveFS.exe continues to open and reopen even after I close it. It happens several times and …" |
 | 2026-10-04 18:04–18:05 | 131.0.2.0 | 5 | 2 | 3 | "GoogleDriveFS.exe won't stop appearing. If I close it it reopens a new terminal and prints pages …" |
 | 2026-10-08 12:30 | 132.0.0.0 | 1 | 1 | 0 | "GoogleDriveFS.exe continues to pop up and print tons of logs and then stop. Once I close the terminal …" |
-| **Total** | | **35** | **25** | **8** | |
+| 2026-10-21 15:07 | 132.0.0.0 | 1 | 1 | 0 | "GoogleDriveFS.exe 132.0.0.0 opened its console window again today on its own after its own RequestSafeRestart …" (sent from the child restarted after the live capture, with a link to this repository) |
+| **Total** | | **36** | **26** | **8** | |
 
 Every delivered report carried the diagnostic log bundle (13 to 28 MB each), so Google already holds the logs for this machine across five versions. Two further points worth noting: the 11 reports on 2026-07-21 were sent one from each successive console window during a single restart loop, each with the full console output pasted into the message, and 8 submissions failed with `DEADLINE_EXCEEDED`, so the feedback path itself is unreliable at these payload sizes.
+
+### 7. Live capture, 2026-10-21
+
+On 2026-10-21 at 14:31 local the window appeared on its own, after a self-requested restart (`RequestSafeRestart ... RESTART_APP_NOW`, child exit `0x11`, parent `Restart count: 1`), and was inspected while it was open. Full detail and method in [live-capture-2026-10-21.md](live-capture-2026-10-21.md). Findings:
+
+- **The child allocates the console itself.** Read from the running processes' PEBs: the parent passes no console, no standard handles and no `STARTF_USESHOWWINDOW` to the child. The child's console handle and its three standard handles are `\Device\ConDrv` handles created by its own `AllocConsole`; `conhost.exe 0x4` (a windowed host) is spawned by the child one second after it starts; and Windows attributes the console window to the child's `log_writer_thread`, the thread that logs `Allocating console to enable stderr`. `GoogleDriveFS.exe` is a GUI-subsystem image, so this is the only way it can have a console at all.
+- **Clicking in the window freezes DriveFS logging.** The conhost window has QuickEdit on, so a click starts a selection, and while a selection is active conhost blocks writers. The `log_writer_thread` was found blocked in `WriteFile` on the console handle; `drive_fs.txt` stopped at the same instant (19:34:23Z) and stayed frozen for 28 minutes, until the selection was cleared. At that moment 64 queued lines were written in one burst: the first was the line found pending in the blocked call's buffer (19:37:26Z), the other 63 are stamped with the release time (20:02:02Z) rather than the time of the events they describe, because DriveFS stamps a line when the writer dequeues it. The G: mount kept working throughout. Any diagnostic bundle collected while such a selection is active is truncated at the click, and one collected afterwards misdates everything that happened during it.
+- **The restart loop, observed live.** After the feedback above was submitted from the restarted child (pid 33068, whose console window was also visible), the window was closed with its X button and the loop from section 1 ran under observation: each child exited `0xc000013a`, the parent logged `Restarting DriveFS child process due to exception Restart count: N` and started a new child, and every one of the seven children logged `Allocating console to enable stderr`. After restart count 7 (20:08:04Z) no child was started, the parent process exited too, G: unmounted, and Drive was gone until relaunched by hand. The two counters are independent: the self-requested `0x11` restart earlier that day was logged as `due to exit status Restart count: 1`, and the first console close that followed was again `due to exception Restart count: 1`.
 
 ## Steps to reproduce
 
@@ -130,12 +139,13 @@ Every delivered report carried the diagnostic log bundle (13 to 28 MB each), so 
 3. The parent restarts the child. A console window titled with the GoogleDriveFS.exe path appears and fills with log output.
 4. Close that window with its X button.
 5. Expected: the window should never exist; at minimum, closing it should not affect Drive.
-   Actual: the child exits `0xC000013A`, the parent restarts it, a new window appears. Repeat 7 times and the parent gives up; the G: drive unmounts and Drive stays down until the next sign-in.
+   Actual: the child exits `0xC000013A`, the parent restarts it, a new window appears. Repeat 7 times and the parent gives up and exits; the G: drive unmounts and Drive stays down until it is launched again.
 
 ## Suggested fix
 
 - A GUI-subsystem process should not call `AllocConsole` to obtain a stderr handle. Log to the file sink only, or open `NUL` for stderr when no handle is inherited.
 - Independently, the child restart path should pass the same hidden window state as the initial launch, and `STATUS_CONTROL_C_EXIT` from a console close should not be treated as a crash to retry 7 times.
+- For as long as the console exists, the console write must not sit in front of the file write on the logging thread. A blocked console (QuickEdit selection, a paused or scrolled window) currently stops the file log too (section 7).
 
 ## Attached files
 
@@ -152,5 +162,7 @@ The raw log files are provided to Google only (they contain the account ID, host
 | `stderr_capture.txt` | Parent's stderr when launched with stderr redirected to a file |
 | `googledrivefsexescreenshot20260616blurred.png` | Screenshot of the console window on 126.0.5.0, 2026-06-16, two weeks after the clean reinstall (machine identifiers blurred) |
 | `console-window-after-parent-restart-2026-10-15.png` | Screenshot of the console window after a parent-initiated restart |
-| `child-process-timeline.csv` | All 147 retained child starts: version, start time, lifetime, console allocated, how it ended |
+| `child-process-timeline.csv` | All retained child starts: version, start time, lifetime, console allocated, how it ended |
 | `in-app-feedback-submissions.csv` | All 35 in-app feedback attempts since 2026-07-21: timestamp, version, payload size, delivered or failed |
+| `live-capture-2026-10-21.md` | Live inspection of a window that appeared on its own on 2026-10-21 (public) |
+| `live-capture-2026-10-21/` | Private set for that capture: console text, logs, environment, screenshots, all thread stacks, full memory dump of the child |

@@ -34,3 +34,4 @@
 "2026-10-04 18:04:55","2026-10-04 23:04:55","131.0.2.0","drive_fs_173.txt","true","27.6","delivered","GoogleDriveFS.exe won't stop appearing. If I close it it reopens a new terminal and prints pages …"
 "2026-10-04 18:05:17","2026-10-04 23:05:17","131.0.2.0","drive_fs_173.txt","true","27.6","delivered","GoogleDriveFS.exe won't stop appearing. If I close it it reopens a new terminal and prints pages …"
 "2026-10-08 12:30:12","2026-10-08 17:30:12","132.0.0.0","drive_fs_182.txt","true","26","delivered","GoogleDriveFS.exe continues to pop up and print tons of logs and then stop. Once I close the …"
+"2026-10-21 15:07:33","2026-10-21 20:07:33","132.0.0.0","drive_fs_202.txt","true","27.2","delivered","GoogleDriveFS.exe 132.0.0.0 opened its console window again today on its own after its own …"

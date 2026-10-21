@@ -102,6 +102,9 @@
 2026-10-08 12:30:12  v132.0.0.0  drive_fs_182.txt  SUBMIT  text starts: "GoogleDriveFS.exe continues to pop up and print tons of logs and then stop. Once I close the terminal it opens..."  attach_logs=true
 2026-10-08 12:30:15  v132.0.0.0  drive_fs_182.txt  sending 26 MB
 2026-10-08 12:30:39  v132.0.0.0  drive_fs_182.txt  OK
+2026-10-21 15:07:33  v132.0.0.0  drive_fs_202.txt  SUBMIT  text starts: "GoogleDriveFS.exe 132.0.0.0 opened its console window again today on its own after its own RequestSafeRestart (child..."  attach_logs=true
+2026-10-21 15:07:36  v132.0.0.0  drive_fs_202.txt  sending 27.2 MB
+2026-10-21 15:07:53  v132.0.0.0  drive_fs_202.txt  OK
 
 ===== older traces: structured logs / switchblade / other files
 
