@@ -23,7 +23,7 @@ So the user-visible defect is a window that "cannot be closed", and the conseque
 
 ## Status
 
-Reported through Drive's in-app feedback 26 times between July and October 2026 with diagnostic logs attached, and three times by other users in the Google Drive Help Community (threads 417837966, 434801725, 445097711). No fix as of 2026-10-21 on version 132.0.0.0. On that date the window appeared on its own after a scheduled restart and was captured live (see `live-capture-2026-10-21.md`); closing it afterwards ran the seven-restart loop and left Drive stopped.
+Reported through Drive's in-app feedback on 14 separate days between July and October 2026 (26 delivered reports, every one with diagnostic logs attached), and three times by other users in the Google Drive Help Community (threads 417837966, 434801725, 445097711). No fix as of 2026-10-21 on version 132.0.0.0. On that date the window appeared on its own after a scheduled restart and was captured live (see `live-capture-2026-10-21.md`); closing it afterwards ran the seven-restart loop and left Drive stopped.
 
 ## What has been tried on this machine
 
