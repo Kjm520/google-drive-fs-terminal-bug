@@ -6,6 +6,23 @@
 **Account type:** Workspace account, mirror mode, mounted as G:
 **Previous reports:** 26 in-app feedback reports delivered through Drive's own "Send feedback" dialog between 2026-07-21 and 2026-10-21, on versions 128 through 132, every one with diagnostic logs attached (see section 6). No response to any of them.
 
+
+## What is in this repository
+
+| File | Contents |
+|---|---|
+| `REPORT-google-drive-console-window.md` | This full report: mechanism, log evidence, controlled reproduction, prior public reports, in-app feedback history, reproduction steps |
+| `child-process-timeline.csv` | Every retained DriveFS child-process start from 2026-07-21 to 2026-10-15: version, start time, lifetime, console allocated, how it ended |
+| `in-app-feedback-submissions.csv` | Every in-app "Send feedback" submission about this defect in the same period, with outcome |
+| `in-app-bug-reports.txt` | The raw log extract the feedback CSV was built from |
+| `existing-reports.md` | Links to earlier public reports of the same symptom in the Google Drive Help Community |
+| `googledrivefsexescreenshot20260616blurred.png` | The window on version 126.0.5.0, two weeks after a clean reinstall |
+| `console-window-after-parent-restart-2026-10-15.png` | The window after a parent-initiated restart during the controlled reproduction |
+| `live-capture-2026-10-21.md` | Live inspection of a window that appeared on its own: the child allocates the console itself, and a click in the window freezes DriveFS logging |
+
+The raw DriveFS log files that back the report are not published here because they contain account and machine identifiers. They have been provided to Google directly.
+
+
 ## Evidence
 
 ### 1. The parent log for 2026-10-13 (`parent_30.txt`)

@@ -21,21 +21,17 @@ So the user-visible defect is a window that "cannot be closed", and the conseque
 **Read the report:** [REPORT-google-drive-console-window.md](REPORT-google-drive-console-window.md)
 
 
-## What is in this repository
-
-| File | Contents |
-|---|---|
-| `REPORT-google-drive-console-window.md` | The full report: mechanism, log evidence, controlled reproduction, prior public reports, in-app feedback history, reproduction steps |
-| `child-process-timeline.csv` | Every retained DriveFS child-process start from 2026-07-21 to 2026-10-15: version, start time, lifetime, console allocated, how it ended |
-| `in-app-feedback-submissions.csv` | Every in-app "Send feedback" submission about this defect in the same period, with outcome |
-| `in-app-bug-reports.txt` | The raw log extract the feedback CSV was built from |
-| `existing-reports.md` | Links to earlier public reports of the same symptom in the Google Drive Help Community |
-| `googledrivefsexescreenshot20260616blurred.png` | The window on version 126.0.5.0, two weeks after a clean reinstall |
-| `console-window-after-parent-restart-2026-10-15.png` | The window after a parent-initiated restart during the controlled reproduction |
-| `live-capture-2026-10-21.md` | Live inspection of a window that appeared on its own: the child allocates the console itself, and a click in the window freezes DriveFS logging |
-
-The raw DriveFS log files that back the report are not published here because they contain account and machine identifiers. They have been provided to Google directly.
-
 ## Status
 
 Reported through Drive's in-app feedback 26 times between July and October 2026 with diagnostic logs attached, and three times by other users in the Google Drive Help Community (threads 417837966, 434801725, 445097711). No fix as of 2026-10-21 on version 132.0.0.0. On that date the window appeared on its own after a scheduled restart and was captured live (see `live-capture-2026-10-21.md`); closing it afterwards ran the seven-restart loop and left Drive stopped.
+
+## What has been tried on this machine
+
+None of it helps. The console is allocated by the application itself, so there is nothing on the user's side that prevents it (report, sections 3, 4 and 7).
+
+- **Clean reinstall, 2026-06-02.** Drive uninstalled, the install directory and `%LOCALAPPDATA%\Google\DriveFS` deleted, Drive reinstalled. The window was back within two weeks on the fresh 126.0.5.0 install.
+- **Every update since.** 128.0.0.0 through 132.0.0.0. The behaviour is identical on all of them.
+- **Launching the parent with a hidden window and stderr redirected to a file.** The child still allocates its own console. The first child's window stays hidden, but the next self-requested restart (DriveFS does this every few hours) starts a child with a visible one.
+- **Hiding the window with `ShowWindow(SW_HIDE)`.** Drive keeps running, but the window returns with the next child restart.
+- **Default terminal setting.** Checked and not involved: the host is `conhost.exe`, Windows Terminal is not attached, and the setting is "Let Windows decide".
+- **Shortcuts and startup entries.** Every shortcut and executable reference to `GoogleDriveFS.exe`, including the autostart (Run key) entry, was checked. None carries a debug, verbose or logging flag, or any argument at all beyond Drive's own `--startup_mode` on the autostart entry. The child's command line is built by the parent and is the same on every start.
