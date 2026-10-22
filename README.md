@@ -35,3 +35,4 @@ None of it helps. The console is allocated by the application itself, so there i
 - **Hiding the window with `ShowWindow(SW_HIDE)`.** Drive keeps running, but the window returns with the next child restart.
 - **Default terminal setting.** Checked and not involved: the host is `conhost.exe`, Windows Terminal is not attached, and the setting is "Let Windows decide".
 - **Shortcuts and startup entries.** Every shortcut and executable reference to `GoogleDriveFS.exe`, including the autostart (Run key) entry, was checked. None carries a debug, verbose or logging flag, or any argument at all beyond Drive's own `--startup_mode` on the autostart entry. The child's command line is built by the parent and is the same on every start.
+- **Waiting for the process to finish.** The process never finishes that I know of. It freezes and will stay there for days at least. It only stops after manually killing 7 times in a row. 
