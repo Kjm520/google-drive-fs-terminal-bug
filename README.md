@@ -2,7 +2,24 @@
 
 Evidence for a long-standing (at least since 2023) defect in Google Drive for desktop on Windows. `GoogleDriveFS.exe` allocates a console window on every child-process start. When the window is visible and the user closes it, the child exits, the parent restarts it with a new window, and after seven restarts Drive stops running until the next sign-in.
 
+## Summary
+
+Every DriveFS child process allocates a console on startup. The DriveFS log records this itself:
+
+```
+instrumentation.cc:376:GetStderrFileDescriptor Allocating console to enable stderr.
+```
+
+This line appears in 155 of 155 child-process logs retained on this machine (2026-07-21 to 2026-10-21). When that console window is visible, the user sees a black window titled `C:\Program Files\Google\Drive File Stream\<version>\GoogleDriveFS.exe` that fills with log output. Closing it sends the console close event to the child, which exits with `0xC000013A` (STATUS_CONTROL_C_EXIT). The parent process treats that as a crash and starts a new child, which opens a new console window. After 7 restarts the parent stops restarting, and Drive is down until the next sign-in.
+
+So the user-visible defect is a window that "cannot be closed", and the consequence of trying is that Drive dies.
+
+
+![LS](./googledrivefsexescreenshot20260616blurred.png)
+
+
 **Read the report:** [REPORT-google-drive-console-window.md](REPORT-google-drive-console-window.md)
+
 
 ## What is in this repository
 
