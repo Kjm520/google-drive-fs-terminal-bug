@@ -6,9 +6,9 @@ FancyZones' option "Move newly created windows to the current active monitor" mo
 
 | File | What it is |
 |---|---|
-| `consoletest.cs` | Minimal GUI-subsystem program: `AllocConsole`, `GetConsoleWindow`, `ShowWindow(SW_HIDE)`, then samples the window's visibility for a second. Args: `[delayMsBeforeHide] [holdMs] [logfile]` |
-| `consoletest2.cs` | Same, plus opening `CONOUT$` and writing log lines immediately after the hide, as Drive does. Args: `[linesToWrite] [holdMs] [logfile]` |
-| `consoletest3.cs` | Parent/child harness with Drive's process structure: the parent spawns the child with a zeroed `STARTUPINFO`, optionally assigns a job object, waits, restarts. `parent <useJob 0|1> <restarts> <childHoldMs> <logfile> [hideDelayMs]` |
+| `alloc-and-hide.cs` | Minimal GUI-subsystem program: `AllocConsole`, `GetConsoleWindow`, `ShowWindow(SW_HIDE)`, then samples the window's visibility for a second. Args: `[delayMsBeforeHide] [holdMs] [logfile]` |
+| `alloc-hide-and-write.cs` | Same, plus opening `CONOUT$` and writing log lines immediately after the hide, as Drive does. Args: `[linesToWrite] [holdMs] [logfile]` |
+| `parent-child-restart-harness.cs` | Parent/child harness with Drive's process structure: the parent spawns the child with a zeroed `STARTUPINFO`, optionally assigns a job object, waits, restarts. `parent <useJob 0|1> <restarts> <childHoldMs> <logfile> [hideDelayMs]` |
 | `console-window-events.ps1` | `SetWinEventHook` recorder: logs create/show/hide/move/title/destroy of every `ConsoleWindowClass` window with owning process, timestamp, rectangle and time since process start. `pwsh -File console-window-events.ps1 <logfile>` |
 
 ## Build
@@ -16,7 +16,7 @@ FancyZones' option "Move newly created windows to the current active monitor" mo
 Any Windows machine has the .NET Framework compiler:
 
 ```
-"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe" /target:winexe /optimize /out:consoletest.exe consoletest.cs
+"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe" /target:winexe /optimize /out:alloc-and-hide.exe alloc-and-hide.cs
 ```
 
 `/target:winexe` matters: the process must be GUI-subsystem so that it has no console until it allocates one, like Drive.
@@ -26,8 +26,8 @@ Any Windows machine has the .NET Framework compiler:
 1. Two or more monitors. FancyZones on, "Move newly created windows to the current active monitor" on.
 2. Start the recorder: `pwsh -File console-window-events.ps1 events.log`.
 3. Put the cursor on a non-primary monitor.
-4. Run `consoletest.exe 0 3000 test.log`.
+4. Run `alloc-and-hide.exe 0 3000 test.log`.
 
-Expected: `SHOW`, `HIDE`, nothing else; the window stays hidden. Observed with the option on: `SHOW`, `HIDE`, `LOCATION` (moved to the cursor's monitor), `SHOW`; the window is visible. With the option off, with the exe in FancyZones' excluded apps, with the cursor on the primary monitor, or with `consoletest.exe 400 3000 test.log` (hide after the move), it stays hidden.
+Expected: `SHOW`, `HIDE`, nothing else; the window stays hidden. Observed with the option on: `SHOW`, `HIDE`, `LOCATION` (moved to the cursor's monitor), `SHOW`; the window is visible. With the option off, with the exe in FancyZones' excluded apps, with the cursor on the primary monitor, or with `alloc-and-hide.exe 400 3000 test.log` (hide after the move), it stays hidden.
 
-`consoletest3.exe parent 0 3 20000 harness.log` runs the restart loop; kill the child process repeatedly and each restart reproduces it.
+`parent-child-restart-harness.exe parent 0 3 20000 harness.log` runs the restart loop; kill the child process repeatedly and each restart reproduces it.

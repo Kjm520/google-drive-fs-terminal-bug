@@ -1,8 +1,8 @@
 // Parent/child harness mimicking GoogleDriveFS.exe's structure. Same exe in both roles.
-//   parent mode: consoletest3.exe parent <useJob 0|1> <restarts> <childHoldMs> <logfile>
+//   parent mode: parent-child-restart-harness.exe parent <useJob 0|1> <restarts> <childHoldMs> <logfile> [hideDelayMs]
 //     CreateProcess(self, "child ..."), with a zeroed STARTUPINFO and no creation flags (as Drive's parent does),
 //     optionally AssignProcessToJobObject, wait for exit, log, restart. Exits after <restarts> restarts.
-//   child mode:  consoletest3.exe child <holdMs> <logfile>
+//   child mode:  parent-child-restart-harness.exe child <holdMs> <logfile> [hideDelayMs]   (spawned by the parent; not run by hand)
 //     AllocConsole, GetConsoleWindow, ShowWindow(SW_HIDE), open CONOUT$, write 200 lines, log, hold, exit.
 using System; using System.Diagnostics; using System.IO; using System.Runtime.InteropServices; using System.Text; using System.Threading;
 class ConsoleTest3 {

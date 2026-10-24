@@ -1,4 +1,4 @@
-// Like consoletest, plus Drive's next steps: open CONOUT$ as stderr, make it unbuffered, and write log lines immediately.
+// Like alloc-and-hide, plus Drive's next steps: open CONOUT$ as stderr, make it unbuffered, and write log lines immediately.
 // args: [linesToWrite] [holdMs] [logfile]
 using System; using System.Diagnostics; using System.IO; using System.Runtime.InteropServices; using System.Text; using System.Threading;
 class ConsoleTest2 {

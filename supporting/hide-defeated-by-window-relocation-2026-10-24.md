@@ -10,9 +10,9 @@ A window-event recorder (`for-powertoys/console-window-events.ps1`, a `SetWinEve
 
 Three small test programs in `for-powertoys/` replace Drive with the minimum needed to reproduce each step (build instructions in that folder's README):
 
-- `consoletest.cs`: a GUI-subsystem process that calls `AllocConsole`, `GetConsoleWindow`, `ShowWindow(SW_HIDE)`, exactly Drive's sequence, and samples the window's visibility afterwards.
-- `consoletest2.cs`: the same, plus opening `CONOUT$` as stderr and writing log lines immediately, as Drive does.
-- `consoletest3.cs`: a parent/child harness with Drive's process structure. The parent spawns the child with a zeroed `STARTUPINFO` and no creation flags (as Drive's parent does, measured from the child's PEB), optionally assigns it to a job object, waits for it to exit, and restarts it. The child does what `consoletest2` does, with an optional delay before the hide.
+- `alloc-and-hide.cs`: a GUI-subsystem process that calls `AllocConsole`, `GetConsoleWindow`, `ShowWindow(SW_HIDE)`, exactly Drive's sequence, and samples the window's visibility afterwards.
+- `alloc-hide-and-write.cs`: the same, plus opening `CONOUT$` as stderr and writing log lines immediately, as Drive does.
+- `parent-child-restart-harness.cs`: a parent/child harness with Drive's process structure. The parent spawns the child with a zeroed `STARTUPINFO` and no creation flags (as Drive's parent does, measured from the child's PEB), optionally assigns it to a job object, waits for it to exit, and restarts it. The child does what `consoletest2` does, with an optional delay before the hide.
 
 ## 2. Drive's own windows: the hide lands, then a second show
 
@@ -33,10 +33,10 @@ A first child and a restart child have identical startup parameters (no `STARTF_
 
 | Program | Runs | Result |
 |---|---|---|
-| `consoletest` (alloc, hide), fresh, back-to-back, and killed-then-restarted | 11 | 11 hidden |
-| `consoletest2` (alloc, hide, open `CONOUT$`, write 50 or 2,000 lines) | 8 | 8 hidden |
-| `consoletest3` harness, first child of each parent, job object on or off | 2 | 2 hidden |
-| `consoletest3` harness, restart children, job object on or off | 6 | 6 visible |
+| `alloc-and-hide`, fresh, back-to-back, and killed-then-restarted | 11 | 11 hidden |
+| `alloc-hide-and-write` (50 or 2,000 lines) | 8 | 8 hidden |
+| `parent-child-restart-harness`, first child of each parent, job object on or off | 2 | 2 hidden |
+| `parent-child-restart-harness`, restart children, job object on or off | 6 | 6 visible |
 
 The harness reproduces Drive's pattern without Drive. With the recorder's window rectangles added, the restart children's second show came with a **move of exactly one monitor width**: the window was created on the primary monitor, hidden, moved to another monitor, and shown there, all within about 20 ms.
 
