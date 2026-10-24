@@ -70,7 +70,7 @@ All steps below were run on version 132.0.0.0 with the default autostart entry
 5. Stopped both processes. Launched the parent with the default window style (same as the Run key): the first child's console window was **visible**.
 6. Hiding that window with `ShowWindow(hwnd, SW_HIDE)` left the child running normally and G: mounted. Only *closing* the window kills the child.
 
-Observed rule: the first child's console visibility follows how the parent was launched; a child started by the parent's restart path gets a visible console even when the first child's was hidden.
+Observed rule at the time: the first child's console visibility follows how the parent was launched; a child started by the parent's restart path gets a visible console even when the first child's was hidden. (Explained on 2026-10-24, section 3b: what mattered was which monitor the mouse cursor was on at each start, not the launch path.)
 
 ### 3a. DriveFS already tries to hide the console, and the hide is unreliable
 
@@ -81,7 +81,35 @@ instrumentation.cc:365:...::GetStderrFileDescriptor 5: Access is denied.
 instrumentation.cc:366:GetStderrFileDescriptor Can't hide the console.
 ```
 
-So the code path is AllocConsole, then an attempt to hide the console window. On this machine the "Can't hide the console" line never appears in any of the 147 child logs: the hide call reports success, yet the window is visible in the cases described above. That is consistent with a race between DriveFS hiding the window and the console host showing it during its own initialisation. A hide that depends on timing cannot be made reliable from the application side; not allocating the console is the fix.
+So the code path is AllocConsole, then an attempt to hide the console window. On this machine the "Can't hide the console" line never appears in any of the 155 child logs: the hide call reports success, yet the window is visible in the cases described above. Measured on 2026-10-24 (section 3b): the hide does land and the window is hidden; a window-management tool then moves the new window to the monitor the cursor is on and shows it again, 1 to 5 ms after the hide. A one-shot hide from the application cannot be made robust against that; not allocating the console is the fix.
+
+The installed 132.0.0.0 executable confirms the routine. Its string table holds the function's messages in call order, in one block together with the function's name, `cello::fs::(anonymous namespace)::InstrumentationProviderImpl::GetStderrFileDescriptor`:
+
+```
+Allocating console to enable stderr.
+Can't create console
+Can't find the console
+Can't hide the console
+CONOUT$
+Can't reopen stderr:
+Can't get STD_ERROR_HANDLE
+_open_osfhandle() failed:
+Can't open fd
+Can't unset stderr buffering:
+```
+
+Read as code: `AllocConsole`, `GetConsoleWindow`, `ShowWindow(SW_HIDE)`, then open `CONOUT$` for writing and install it as stderr, then `setvbuf` to make stderr unbuffered. The import table contains `AllocConsole`, `GetConsoleWindow` and `ShowWindow` and does not contain `FreeConsole`, so the console is never released. Three consequences follow directly. The hide is a single call made microseconds after `AllocConsole` returns, with no retry, so anything that shows the window afterwards wins. The `CONOUT$` handle is opened write-only, matching the access mask of the handle the log writer was found blocked on in the live capture (section 7). And stderr is deliberately unbuffered, so every log line is its own synchronous write to the console, which is why a paused console stops the writer on the very next line.
+
+### 3b. What defeats the hide, measured 2026-10-24
+
+A window-event recorder and three minimal test programs (`!aux/`) reproduced the behaviour with and without Drive. Full detail in [supporting/hide-defeated-by-window-relocation-2026-10-24.md](supporting/hide-defeated-by-window-relocation-2026-10-24.md). Findings:
+
+- Drive's hide lands 5 to 13 ms after conhost shows the window, every time, and hides it. On the visible cases the window is then moved to the monitor the mouse cursor is on and shown again, 1 to 5 ms after the hide.
+- A bare `AllocConsole` + `ShowWindow(SW_HIDE)` program stays hidden in 19 of 19 runs; a parent/child harness with Drive's process structure reproduces the move-and-show. The cursor's monitor decides it: cursor on the primary monitor, hidden; cursor elsewhere, moved there and visible. A hide delayed past the move sticks.
+- With the extra monitors disconnected, 8 of 8 Drive children stayed hidden. The "first child hidden, restart child visible" rule in section 3 was where the cursor happened to be at each start.
+- The relocator on this machine is PowerToys FancyZones' option "Move newly created windows to the current active monitor". With it off, 5 of 5 hidden; on, 8 of 8 visible; on with `GoogleDriveFS.exe` in FancyZones' excluded apps, 5 of 5 hidden. conhost's own source has no such relocation.
+
+So the window is seen by users who have several monitors, a tool that moves new windows to the cursor's monitor, and the cursor off the primary monitor when a child starts. Everyone else has the same console, hidden.
 
 ### 4. Earlier wrong diagnosis, for completeness
 
@@ -138,7 +166,7 @@ On 2026-10-21 at 14:31 local the window appeared on its own, after a self-reques
 
 ## Suggested fix
 
-- A GUI-subsystem process should not call `AllocConsole` to obtain a stderr handle. Log to the file sink only, or open `NUL` for stderr when no handle is inherited.
+- A GUI-subsystem process should not call `AllocConsole` to obtain a stderr handle. Log to the file sink only, or open `NUL` for stderr when no handle is inherited. If a console must exist, have the parent spawn the child with `CREATE_NO_WINDOW` so it is headless; a window that is hidden after the fact is re-shown by window-management tools (section 3b), a window that never exists is not.
 - Independently, the child restart path should pass the same hidden window state as the initial launch, and `STATUS_CONTROL_C_EXIT` from a console close should not be treated as a crash to retry 7 times.
 - For as long as the console exists, the console write must not sit in front of the file write on the logging thread. A blocked console (QuickEdit selection, a paused or scrolled window) currently stops the file log too (section 7).
 

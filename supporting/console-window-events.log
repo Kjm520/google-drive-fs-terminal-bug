@@ -1,0 +1,100 @@
+11:27:20.425  HOOK     started, recorder pid 41360
+11:27:35.038  START    conhost pid 4100
+11:27:35.058  CREATE   conhost pid 4100  hwnd 0x380D0C  t+20ms  visible=False
+11:27:36.083  DESTROY  conhost pid 4100  hwnd 0x380D0C  t+20ms  visible=False
+11:28:06.223  START    conhost pid 3772
+11:28:06.253  CREATE   conhost pid 3772  hwnd 0x860BFC  t+30ms  visible=False
+11:28:06.169  START    GoogleDriveFS pid 42384
+11:28:06.284  SHOW     GoogleDriveFS pid 42384  hwnd 0x860BFC  t+115ms  visible=True
+11:28:06.291  HIDE     GoogleDriveFS pid 42384  hwnd 0x860BFC  t+121ms  visible=False
+11:28:17.011  DESTROY  GoogleDriveFS pid 42384  hwnd 0x860BFC  t+121ms  visible=False
+11:28:17.126  START    conhost pid 42380
+11:28:17.153  CREATE   conhost pid 42380  hwnd 0x430732  t+26ms  visible=False
+11:28:17.074  START    GoogleDriveFS pid 15820
+11:28:17.170  SHOW     GoogleDriveFS pid 15820  hwnd 0x430732  t+95ms  visible=True
+11:28:17.179  HIDE     GoogleDriveFS pid 15820  hwnd 0x430732  t+104ms  visible=False
+11:28:17.180  SHOW     GoogleDriveFS pid 15820  hwnd 0x430732  t+105ms  visible=True
+11:28:25.113  DESTROY  GoogleDriveFS pid 15820  hwnd 0x430732  t+105ms  visible=False
+11:28:25.246  START    conhost pid 38528
+11:28:25.276  CREATE   conhost pid 38528  hwnd 0x880BFC  t+29ms  visible=False
+11:28:25.160  START    GoogleDriveFS pid 40428
+11:28:25.291  SHOW     GoogleDriveFS pid 40428  hwnd 0x880BFC  t+131ms  visible=True
+11:28:25.298  HIDE     GoogleDriveFS pid 40428  hwnd 0x880BFC  t+137ms  visible=False
+11:28:25.300  SHOW     GoogleDriveFS pid 40428  hwnd 0x880BFC  t+140ms  visible=True
+11:28:26.176  DESTROY  GoogleDriveFS pid 40428  hwnd 0x880BFC  t+140ms  visible=False
+11:28:26.339  START    conhost pid 31508
+11:28:26.384  CREATE   conhost pid 31508  hwnd 0x2D06E2  t+44ms  visible=False
+11:28:26.214  START    GoogleDriveFS pid 4920
+11:28:26.413  SHOW     GoogleDriveFS pid 4920  hwnd 0x2D06E2  t+199ms  visible=True
+11:28:26.419  HIDE     GoogleDriveFS pid 4920  hwnd 0x2D06E2  t+205ms  visible=False
+11:28:26.421  SHOW     GoogleDriveFS pid 4920  hwnd 0x2D06E2  t+207ms  visible=True
+11:28:27.119  DESTROY  GoogleDriveFS pid 4920  hwnd 0x2D06E2  t+207ms  visible=False
+11:28:27.239  START    conhost pid 7240
+11:28:27.281  CREATE   conhost pid 7240  hwnd 0x790E7A  t+41ms  visible=False
+11:28:27.143  START    GoogleDriveFS pid 43020
+11:28:27.305  SHOW     GoogleDriveFS pid 43020  hwnd 0x790E7A  t+162ms  visible=True
+11:28:27.318  HIDE     GoogleDriveFS pid 43020  hwnd 0x790E7A  t+175ms  visible=False
+11:28:27.323  SHOW     GoogleDriveFS pid 43020  hwnd 0x790E7A  t+180ms  visible=True
+11:28:27.906  DESTROY  GoogleDriveFS pid 43020  hwnd 0x790E7A  t+180ms  visible=False
+11:28:28.031  START    conhost pid 22432
+11:28:28.072  CREATE   conhost pid 22432  hwnd 0x5B06C0  t+40ms  visible=False
+11:28:27.923  START    GoogleDriveFS pid 42700
+11:28:28.100  SHOW     GoogleDriveFS pid 42700  hwnd 0x5B06C0  t+176ms  visible=True
+11:28:28.107  HIDE     GoogleDriveFS pid 42700  hwnd 0x5B06C0  t+183ms  visible=False
+11:28:28.112  SHOW     GoogleDriveFS pid 42700  hwnd 0x5B06C0  t+188ms  visible=True
+11:28:28.671  DESTROY  GoogleDriveFS pid 42700  hwnd 0x5B06C0  t+188ms  visible=False
+11:28:28.785  START    conhost pid 35664
+11:28:28.823  CREATE   conhost pid 35664  hwnd 0x630700  t+38ms  visible=False
+11:28:28.684  START    GoogleDriveFS pid 5344
+11:28:28.845  SHOW     GoogleDriveFS pid 5344  hwnd 0x630700  t+161ms  visible=True
+11:28:28.854  HIDE     GoogleDriveFS pid 5344  hwnd 0x630700  t+170ms  visible=False
+11:28:28.857  SHOW     GoogleDriveFS pid 5344  hwnd 0x630700  t+172ms  visible=True
+11:28:29.468  DESTROY  GoogleDriveFS pid 5344  hwnd 0x630700  t+172ms  visible=False
+11:28:50.484  START    conhost pid 41508
+11:28:50.514  CREATE   conhost pid 41508  hwnd 0x780D5C  t+30ms  visible=False
+11:28:50.435  START    GoogleDriveFS pid 5512
+11:28:50.545  SHOW     GoogleDriveFS pid 5512  hwnd 0x780D5C  t+110ms  visible=True
+11:28:50.555  HIDE     GoogleDriveFS pid 5512  hwnd 0x780D5C  t+120ms  visible=False
+11:28:58.459  DESTROY  GoogleDriveFS pid 5512  hwnd 0x780D5C  t+120ms  visible=False
+11:28:58.562  START    conhost pid 41548
+11:28:58.589  CREATE   conhost pid 41548  hwnd 0x7B0DE4  t+26ms  visible=False
+11:28:58.510  START    GoogleDriveFS pid 21032
+11:28:58.603  SHOW     GoogleDriveFS pid 21032  hwnd 0x7B0DE4  t+93ms  visible=True
+11:28:58.608  HIDE     GoogleDriveFS pid 21032  hwnd 0x7B0DE4  t+98ms  visible=False
+11:28:58.610  SHOW     GoogleDriveFS pid 21032  hwnd 0x7B0DE4  t+100ms  visible=True
+11:29:00.331  DESTROY  GoogleDriveFS pid 21032  hwnd 0x7B0DE4  t+100ms  visible=False
+11:29:00.428  START    conhost pid 22532
+11:29:00.457  CREATE   conhost pid 22532  hwnd 0xA50652  t+28ms  visible=False
+11:29:00.374  START    GoogleDriveFS pid 19476
+11:29:00.477  SHOW     GoogleDriveFS pid 19476  hwnd 0xA50652  t+102ms  visible=True
+11:29:00.483  HIDE     GoogleDriveFS pid 19476  hwnd 0xA50652  t+108ms  visible=False
+11:29:00.486  SHOW     GoogleDriveFS pid 19476  hwnd 0xA50652  t+111ms  visible=True
+11:29:02.038  DESTROY  GoogleDriveFS pid 19476  hwnd 0xA50652  t+111ms  visible=False
+11:29:02.129  START    conhost pid 17908
+11:29:02.156  CREATE   conhost pid 17908  hwnd 0x3F0702  t+27ms  visible=False
+11:29:02.079  START    GoogleDriveFS pid 25536
+11:29:02.175  SHOW     GoogleDriveFS pid 25536  hwnd 0x3F0702  t+96ms  visible=True
+11:29:02.182  HIDE     GoogleDriveFS pid 25536  hwnd 0x3F0702  t+102ms  visible=False
+11:29:02.184  SHOW     GoogleDriveFS pid 25536  hwnd 0x3F0702  t+105ms  visible=True
+11:29:02.770  DESTROY  GoogleDriveFS pid 25536  hwnd 0x3F0702  t+105ms  visible=False
+11:29:02.861  START    conhost pid 42328
+11:29:02.892  CREATE   conhost pid 42328  hwnd 0x690700  t+30ms  visible=False
+11:29:02.799  START    GoogleDriveFS pid 8228
+11:29:02.913  SHOW     GoogleDriveFS pid 8228  hwnd 0x690700  t+114ms  visible=True
+11:29:02.921  HIDE     GoogleDriveFS pid 8228  hwnd 0x690700  t+121ms  visible=False
+11:29:02.923  SHOW     GoogleDriveFS pid 8228  hwnd 0x690700  t+124ms  visible=True
+11:29:03.613  DESTROY  GoogleDriveFS pid 8228  hwnd 0x690700  t+124ms  visible=False
+11:29:03.720  START    conhost pid 28316
+11:29:03.752  CREATE   conhost pid 28316  hwnd 0x4F0732  t+32ms  visible=False
+11:29:03.654  START    GoogleDriveFS pid 42664
+11:29:03.774  SHOW     GoogleDriveFS pid 42664  hwnd 0x4F0732  t+120ms  visible=True
+11:29:03.780  HIDE     GoogleDriveFS pid 42664  hwnd 0x4F0732  t+126ms  visible=False
+11:29:03.782  SHOW     GoogleDriveFS pid 42664  hwnd 0x4F0732  t+128ms  visible=True
+11:29:04.382  DESTROY  GoogleDriveFS pid 42664  hwnd 0x4F0732  t+128ms  visible=False
+11:29:04.490  START    conhost pid 31384
+11:29:04.523  CREATE   conhost pid 31384  hwnd 0x6F071E  t+33ms  visible=False
+11:29:04.423  START    GoogleDriveFS pid 1044
+11:29:04.551  SHOW     GoogleDriveFS pid 1044  hwnd 0x6F071E  t+128ms  visible=True
+11:29:04.559  HIDE     GoogleDriveFS pid 1044  hwnd 0x6F071E  t+136ms  visible=False
+11:29:04.563  SHOW     GoogleDriveFS pid 1044  hwnd 0x6F071E  t+140ms  visible=True
+11:29:05.232  DESTROY  GoogleDriveFS pid 1044  hwnd 0x6F071E  t+140ms  visible=False

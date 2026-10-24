@@ -1,0 +1,100 @@
+=== every printable string in the binary that mentions 'console' (ASCII, 6+ chars) ===
+0x036FA2D8  Allocating console to enable stderr.
+0x036FA358  Can't create console.
+0x036FA370  Can't find the console.
+0x036FA388  Can't hide the console.
+0x036FAC58  There is no session attached to the physical console
+0x037162F0  account.enterprise_settings.can_access_admin_console
+0x0374FEC0  Get Chrome DevTools runtime console API event receiver
+0x0374FEF8  Register Chrome DevTools runtime console API event receiver
+0x046AE781  (package:google/internal/devopsconsole/v1
+0x046AE854  ?package:java/com/google/cloud/devops/console/boq/api/corpserver
+0x046B6784  (ONEPICK_DEVELOPER_CONSOLE_PARTNER_PORTAL
+0x046B67B3  #ONEPICK_DEVELOPER_CONSOLE_VERTEX_AI
+0x046B6D32  !ONEPICK_DEVELOPER_CONSOLE_DATADUO
+0x046BAE18  $UC_PLAY_CONSOLE_PROVISION_OF_SERVICE
+0x046BAE43  $UC_PLAY_CONSOLE_FUNCTIONAL_DEBUGGING
+0x046BAE6E  )UC_PLAY_CONSOLE_MEASURING_USER_ENGAGEMENT
+0x046BAE9E  #UC_PLAY_CONSOLE_PRODUCT_IMPROVEMENT
+0x046C91BF  3package:google/internal/alkali/applications/console
+0x046C9990  ?package:java/com/google/developers/console/testing/fakebackendsb
+0x0473F189  "PLAY_CONSOLE_APP_FEATURE_ANALYTICS
+0x0474604A  #PAISA_MERCHANT_VERIFICATION_CONSOLE
+0x04748E0B  &PLAY_CONSOLE_MOBILE_APP_ANDROID_PRIMES
+0x04748E38  "PLAY_CONSOLE_MOBILE_APP_IOS_PRIMES
+0x0474D619  $SUPPORT_KNOWLEDGE_DIAGNOSTIC_CONSOLE
+0x0474FDF6  &STREAMZ_FOOD_ORDERING_AI_AGENT_CONSOLE
+0x0475076A  $SYSUI_PERFORMANCE_CONSOLE_WEB_PRIMES
+0x04761540  -security.data_access.asr.CloudConsoleResource
+0x04761570  "0.security.data_access.asr.cloud_console_resource*z
+0x047D5158  <package:google/internal/alkali/applications/baselayerconsole
+0x047D57CB  Npackage:java/com/google/firebase/console/testing/services/cloudresourcemanager
+0x047EF31E  !ADMIN_CONSOLE_DOMAIN_VERIFICATION
+0x047EF345  &ADMIN_CONSOLE_ICANN_EMAIL_VERIFICATION
+0x04835D18  Fpackage:java/com/google/firebase/console/testing/services/serviceusage
+0x04835D60  Dpackage:java/com/google/firebase/console/testing/services/monitoringb
+0x04844026  8package:google/internal/alkali/applications/genaiconsole
+0x048440ED  (package:google/internal/devopsconsole/v1
+0x04844228  ?package:java/com/google/cloud/devops/console/boq/api/corpserver
+0x04853C90  $API_SEARCH_CONSOLE_INSIGHTS_READONLY
+0x0485936C  ?package:java/com/google/developers/console/testing/fakebackendsb
+0x0487F937  0package:google/corp/youtube/revtubeengconsole/v1
+0x04880C1C  Mpackage:video/youtube/logs/financial/testing_infra/revtube_eng_console/server
+(41 matches)
+=== bare identifiers mentioning console (API names, type names) ===
+0x039F69E2  AllocConsole
+0x039F6F28  GetConsoleMode
+0x039F6F3A  GetConsoleOutputCP
+0x039F6F50  GetConsoleScreenBufferInfo
+0x039F6F6E  GetConsoleWindow
+0x039F73A0  GetNumberOfConsoleInputEvents
+0x039F7B88  ReadConsoleInputW
+0x039F7B9C  ReadConsoleW
+0x039F7D28  SetConsoleCtrlHandler
+0x039F7D40  SetConsoleCursorPosition
+0x039F8090  WTSGetActiveConsoleSessionId
+0x039F8154  WriteConsoleInputW
+0x039F816A  WriteConsoleW
+0x0464B01A  can_access_admin_console
+0x046AD9B6  CLOUD_CONSOLE_WORKSPACE
+0x046B65D7  ONEPICK_BUSINESS_CONSOLE
+0x046B6751  ONEPICK_DEVELOPER_CONSOLE
+0x046BC261  CB_PLAY_CONSOLE_TOS
+0x046C2EF7  CB_PLAY_CONSOLE_TOS
+0x0473F14D  PLAY_CONSOLE_APP
+0x0473F168  PLAY_CONSOLE_APP_PRIMES
+0x0474110B  CLOUD_CONSOLE_ANDROID_PRIMES
+0x0474160E  DASHER_ADMINCONSOLE
+0x047423FD  SEARCH_CONSOLE
+0x0474384C  PAISA_MERCHANT_CONSOLE
+0x04744509  RBM_DEV_CONSOLE
+0x0474451F  RBM_DEV_CONSOLE_WEB_PRIMES
+0x047447DC  CLOUD_CONSOLE_MOBILE
+0x0474508D  DEVOPS_CONSOLE
+0x047451A8  APPS_PLATFORM_CONSOLE
+0x04746348  STREAMZ_CLOUD_CHANNEL_CONSOLE
+0x04746413  PAYMENTS_MERCHANT_CONSOLE
+0x0474691E  STREAMZ_FIREBASE_CONSOLE_WEB
+0x0474750F  CLOUD_CHANNEL_CONSOLE
+0x04747BF4  TRANSCONSOLE
+0x04747D76  STREAMZ_ADMINCONSOLE_WEB
+0x04748B70  PLAY_CONSOLE_MOBILE_APP
+0x04749AAA  FIREBASE_CONSOLE
+0x0474A4B1  SLM_CONSOLE
+0x0474B623  IR_CONSOLE
+0x0474C345  PLAY_CONSOLE_WEB
+0x0474C8B1  DATA_PROCESSING_CONSOLE
+0x0474EBE5  EDACLOUD_USER_CONSOLE
+0x0474F583  CES_CONSOLE
+0x04761529  cloud_console_resource
+0x047BAFEB  ADMIN_CONSOLE_CLIENT_ID
+0x047EF2FB  ADMIN_CONSOLE_COLD_START_TILES
+0x047EF372  ADMIN_CONSOLE_MIGRATION_SETUP
+0x047EF396  ADMIN_CONSOLE_MX_SETUP
+0x0484579D  API_APPS_PLATFORM_CONSOLE
+0x0484F9EF  API_PLAY_CONSOLE
+0x0484FEB6  API_ACCESS_OSS_CONSOLE
+0x04858BAE  API_ANDROID_DEVELOPER_CONSOLE
+0x048843E5  devconsole_robot
+=== anything saying hidden / hid / SW_HIDE ===
+0x036FA388  Can't hide the console.

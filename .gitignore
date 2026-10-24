@@ -1,4 +1,8 @@
 # Raw DriveFS logs and unredacted material: provided to Google privately, never committed.
 # They contain the account ID, hostname, device IDs and synced file names.
-for-google/
+for-google/*
 *.tmp.png
+
+# Auxiliary tool build outputs and run logs (logs contain local paths)
+\!aux/*
+
