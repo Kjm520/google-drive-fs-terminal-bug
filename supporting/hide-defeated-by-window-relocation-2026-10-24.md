@@ -6,9 +6,9 @@ Environment: Windows 11 Pro 10.0.26300, three 2560x1440 monitors at 125% with th
 
 ## 1. Method
 
-A window-event recorder (`!aux/console-window-events.ps1`, a `SetWinEventHook` listener) logs every create, show, hide, move, title change and destroy of any `ConsoleWindowClass` window, with the owning process, a timestamp, the window rectangle, and the time since the owning process started. Drive's child was then started and killed repeatedly, with `Stop-Process` (so Drive keeps running) or with the window's X button, while the recorder watched. The complete event log is `console-window-events-2026-10-24.log` in this folder.
+A window-event recorder (`for-powertoys/console-window-events.ps1`, a `SetWinEventHook` listener) logs every create, show, hide, move, title change and destroy of any `ConsoleWindowClass` window, with the owning process, a timestamp, the window rectangle, and the time since the owning process started. Drive's child was then started and killed repeatedly, with `Stop-Process` (so Drive keeps running) or with the window's X button, while the recorder watched. The complete event log is `console-window-events-2026-10-24.log` in this folder.
 
-Three small test programs in `!aux/` replace Drive with the minimum needed to reproduce each step:
+Three small test programs in `for-powertoys/` replace Drive with the minimum needed to reproduce each step (build instructions in that folder's README):
 
 - `consoletest.cs`: a GUI-subsystem process that calls `AllocConsole`, `GetConsoleWindow`, `ShowWindow(SW_HIDE)`, exactly Drive's sequence, and samples the window's visibility afterwards.
 - `consoletest2.cs`: the same, plus opening `CONOUT$` as stderr and writing log lines immediately, as Drive does.

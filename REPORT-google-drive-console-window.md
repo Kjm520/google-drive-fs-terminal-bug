@@ -102,7 +102,7 @@ Read as code: `AllocConsole`, `GetConsoleWindow`, `ShowWindow(SW_HIDE)`, then op
 
 ### 3b. What defeats the hide, measured 2026-10-24
 
-A window-event recorder and three minimal test programs (`!aux/`) reproduced the behaviour with and without Drive. Full detail in [supporting/hide-defeated-by-window-relocation-2026-10-24.md](supporting/hide-defeated-by-window-relocation-2026-10-24.md). Findings:
+A window-event recorder and three minimal test programs (`for-powertoys/`) reproduced the behaviour with and without Drive. Full detail in [supporting/hide-defeated-by-window-relocation-2026-10-24.md](supporting/hide-defeated-by-window-relocation-2026-10-24.md). Findings:
 
 - Drive's hide lands 5 to 13 ms after conhost shows the window, every time, and hides it. On the visible cases the window is then moved to the monitor the mouse cursor is on and shown again, 1 to 5 ms after the hide.
 - A bare `AllocConsole` + `ShowWindow(SW_HIDE)` program stays hidden in 19 of 19 runs; a parent/child harness with Drive's process structure reproduces the move-and-show. The cursor's monitor decides it: cursor on the primary monitor, hidden; cursor elsewhere, moved there and visible. A hide delayed past the move sticks.
