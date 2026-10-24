@@ -10,6 +10,8 @@ Google Drive fetches its config flags every 4 hours. When a changed flag needs a
 
 ## The Cause
 
+Google Drive allocates a console it should never have allocated, then tries to hide it; everything else follows from that. FancyZones' relocation exposes that. 
+
 Microsoft PowerToy's FancyZones configuration option for "Move newly created windows to the current active monitor" (FancyzonesOpenWindowOnActiveMonitor) is what breaks Drive's normal hide procedure. Drive spawns the child and immediately hides it, but a window relocation prevents that. Which means this only applies to users that have multiple monitors, and have FancyZones with FancyzonesOpenWindowOnActiveMonitor enabled.
 
 **Read Claude's report:** [REPORT-google-drive-console-window.md](REPORT-google-drive-console-window.md)
